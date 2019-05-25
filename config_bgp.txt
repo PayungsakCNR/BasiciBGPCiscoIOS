@@ -1,0 +1,16 @@
+router bgp 65530    //Define ASN
+ bgp router-id 10.10.255.3  //Define Router-ID
+ bgp log-neighbor-changes
+ neighbor PaOTiK peer-group //Define Peer-Group
+ neighbor PaOTiK remote-as 65530  //Define Remote-AS
+ neighbor PaOTiK description Payungsak's-Router@CNR //Define Peer Description
+ neighbor PaOTiK password 7 xxxxx  //Define password for authen , more secure.
+ neighbor PaOTiK update-source Loopback0  //Define update source interface
+ neighbor 10.10.255.1 peer-group PaOTiK //add this ip to peer-group
+ !
+ address-family ipv4  //address-family ipv6 config
+  redistribute eigrp 100 metric 300 route-map pool#59 //Redistribute EIGRP into BGP.
+  neighbor PaOTiK next-hop-self //Set Next-Hop-Self
+  neighbor 10.10.255.1 activate //Active Nei.
+ exit-address-family
+ //End
